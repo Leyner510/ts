@@ -1,3 +1,5 @@
-import { makeHello } from "shared/module";
+const PlayerService = game.GetService("Players");
 
-print(makeHello("main.server.ts"));
+PlayerService.PlayerAdded.Connect((player) => {
+	print(`Player ${player.Name} joined the server!`);
+});
