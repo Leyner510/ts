@@ -1,3 +1,8 @@
-import { makeHello } from "shared/module";
+const ReplicatedStorage = game.GetService("ReplicatedStorage");
+const IconClickedEvent = ReplicatedStorage.WaitForChild("IconClickedEvent") as RemoteEvent;
 
-print(makeHello("main.client.ts"));
+const Icon = script.Parent as ClickDetector;
+
+Icon.MouseClick.Connect(() => {
+	IconClickedEvent.FireServer();
+});
