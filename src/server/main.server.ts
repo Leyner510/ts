@@ -1,8 +1,6 @@
 const PlayerService = game.GetService("Players");
-
 PlayerService.PlayerAdded.Connect((player) => {
 	print(`Игрок ${player.Name} подключился к серверу!`);
-
 	player.CharacterAdded.Connect((character) => {
 		const humanoidRootPart = character.FindFirstChild("HumanoidRootPart");
 		if (humanoidRootPart?.IsA("BasePart")) {
@@ -13,8 +11,6 @@ PlayerService.PlayerAdded.Connect((player) => {
 		}
 	});
 });
-
 PlayerService.PlayerRemoving.Connect((player) => {
 	print(`Игрок ${player.Name} отключился от сервера!`);
 });
-
