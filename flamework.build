@@ -1,6 +1,22 @@
 {
 	"version": 1,
 	"flameworkVersion": "1.2.3",
-	"identifiers": {},
+	"identifiers": {
+		"ts:out/server/services/main.server@MainService": "server/services/main.server@MainService",
+		"ts:out/server/services/main.server@PlayerService": "server/services/main.server@PlayerService",
+		"ts:out/server/services/main.server@PlayerServicet": "server/services/main.server@PlayerServicet",
+		"ts:out/server/services/main.server@PlayerService.onStart": "server/services/main.server@PlayerService.onStart",
+		"ts:out/server/services/main.server@GlobalEvents": "server/services/main.server@GlobalEvents",
+		"ts:out/server/services/PlayerService@PlayerService": "server/services/PlayerService@PlayerService",
+		"ts:out/server/services/PlayerService@GlobalEvents": "server/services/PlayerService@GlobalEvents",
+		"ts:out/server/Events@PlayerService": "server/Events@PlayerService",
+		"ts:out/server/Events@GlobalEvents": "server/Events@GlobalEvents",
+		"ts:out/shared/Events@GlobalEvents": "shared/Events@GlobalEvents",
+		"ts:out/server/services/PlayerController@PlayerController": "server/services/PlayerController@PlayerController",
+		"ts:out/server/services/PlayerController@ClickerController": "server/services/PlayerController@ClickerController",
+		"ts:out/server/services/PlayerService@C": "server/services/PlayerService@C",
+		"ts:out/server/services/PlayerService@Pla": "server/services/PlayerService@Pla",
+		"ts:out/client/main.client@ClickerController": "client/main.client@ClickerController"
+	},
 	"metadata": {}
 }
