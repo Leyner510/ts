@@ -25,7 +25,7 @@ export class Click implements OnStart {
 		});
 
 		ClientEvents.updateClicks.connect((clicks) => {
-			this.clickAtom.(clicks);
+			this.clickAtom.set(clicks);
 			print(`Your clicks is ${clicks}`);
 		});
 
