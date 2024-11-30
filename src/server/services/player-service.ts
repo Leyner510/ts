@@ -29,6 +29,7 @@ export class PlayerService implements OnStart {
 		this.clicks.set(player, currentClicks + 1);
 		this.clicksAtom(this.clicks.get(player) || 0);
 		this.syncer.hydrate(player);
+		this.sendClicksToClient(player)
 	};
 
 	public sendClicksToClient(player: Player) {

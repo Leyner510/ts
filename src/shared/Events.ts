@@ -1,7 +1,8 @@
 import { Networking } from "@flamework/networking";
-
+import { Players } from "@rbxts/services";
 interface ClientToServerEvents {
 	click: () => void;
+	clickEvent: (player: Player) => void;
 }
 
 interface ServerToClientEvents {
