@@ -2,7 +2,7 @@ import { OnStart, Service } from "@flamework/core";
 import Charm, { atom } from "@rbxts/charm";
 import CharmSync from "@rbxts/charm-sync";
 import { Players } from "@rbxts/services";
-import { ClientEvents, ServerEvents } from "shared/events";
+import { ServerEvents } from "shared/events";
 
 @Service()
 export class PlayerService implements OnStart {
@@ -11,32 +11,41 @@ export class PlayerService implements OnStart {
 	private syncer = CharmSync.server({
 		atoms: { clicks: this.clicksAtom },
 	});
- 
+
+	private clickEvent = new Instance("BindableEvent");
+	private getClicksEvent = new Instance("BindableEvent");
+	private clicksUpdatedEvent = new Instance("BindableEvent");
+
 	public onStart() {
-        ServerEvents.click.connect((player) => {
-			const clicks = this.clicks.get(player) ?? 0;
-			this.clicks.set(player, clicks + 1);
-			ServerEvents.updateClicks.fire(player, clicks + 1);
-        });
-		Players.PlayerAdded.Connect((player) => {
-			const clicksAtom = atom<number>(0);
-			this.clicks.set(player, clicksAtom());
-
-			const syncer = CharmSync.server({
-				atoms: { clicks: clicksAtom },
-			});
-			this.syncer.hydrate(player);
-
-			ServerEvents.click.connect((clickedPlayer) => {
-				if (clickedPlayer === player) {
-					const currentClicks = clicksAtom();
-					clicksAtom(currentClicks + 1);
-                    ServerEvents.updateClicks.fire(player, currentClicks + 1);
-				}
-			});
+		this.clickEvent.Event.Connect((player: Player) => {
+			this.incrementClicks(player);
 		});
-        Players.PlayerRemoving.Connect((player) => {
-            this.clicks.delete(player);
-        })
+		this.getClicksEvent.Event.Connect((player: Player) => {
+			this.sendClicksToClient(player);
+		});
+	}
+	public incrementClicks(player: Player) {
+		const currentClicks = this.clicks.get(player) || 0;
+		this.clicks.set(player, currentClicks + 1);
+		this.clicksAtom(this.clicks.get(player) || 0);
+		this.syncer.hydrate(player);
+	};
+
+	public sendClicksToClient(player: Player) {
+		const clicks = this.clicks.get(player) || 0;
+		this.clicksUpdatedEvent.Fire(player, clicks);
+	}
+
+	//Вызов событий
+	public fireClickEvent(player: Player) {
+		this.clickEvent.Fire(player);
+	}
+
+	public fireGetClicksEvent(player: Player) {
+		this.getClicksEvent.Fire(player);
+	}
+
+	public connectClicksUpdatedEvent(callback: (player: Player, clicks: number) => void) {
+		this.clicksUpdatedEvent.Event.Connect(callback);
 	}
 }
