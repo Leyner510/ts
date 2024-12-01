@@ -1,26 +1,24 @@
+import { Components } from "@flamework/components";
 import { OnStart, Service } from "@flamework/core";
-import { atom } from "@rbxts/charm";
-import CharmSync from "@rbxts/charm-sync";
+import { Players } from "@rbxts/services";
+import { PlayerComponent } from "server/components/player-component";
 import { ServerEvents} from "shared/Events";
 
 @Service()
 export class PlayerService implements OnStart {
-	private clicksAtom = atom<number>(0);
-	private syncer = CharmSync.server({
-		atoms: { clicks: this.clicksAtom },
-	});
+	constructor(private components: Components) {}
 
 	public onStart() {
 		ServerEvents.hydrate.connect((player) => {
-			this.syncer.hydrate(player);
+			const playerComponent = this.components.getComponent<PlayerComponent>(player);
+			playerComponent?.hydrate();
 		});
 
-		this.syncer.connect((player, ...payloads) => {
-			ServerEvents.updateAtoms.fire(player, payloads);
-		})
-
-		ServerEvents.click.connect(() => {
-			this.clicksAtom((currentClicks) => currentClicks + 1);
+		ServerEvents.click.connect((player) => {
+			const playerComponent = this.components.getComponent<PlayerComponent>(player);
+			playerComponent?.incrementClicks(1);
 		});
+
+		Players.PlayerAdded.Connect((player) => this.components.addComponent<PlayerComponent>(player));
 	}
 }

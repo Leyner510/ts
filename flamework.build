@@ -3,12 +3,10 @@
 	"flameworkVersion": "1.2.3",
 	"identifiers": {
 		"ts:out/client/controllers/click@Click": "client/controllers/click@Click",
+		"ts:out/server/components/player-component@PlayerComponent": "server/components/player-component@PlayerComponent",
 		"ts:out/server/services/player-service@PlayerService": "server/services/player-service@PlayerService",
 		"ts:out/shared/Events@GlobalEvents": "shared/Events@GlobalEvents",
-		"ts:out/server/components/components@PlayerComponent": "server/components/components@PlayerComponent",
-		"ts:out/server/components/components@PlayerClicks": "server/components/components@PlayerClicks",
-		"ts:out/server/services/player-service@PlayerComponent": "server/services/player-service@PlayerComponent",
-		"ts:out/server/components/game-manager@GameManager": "server/components/game-manager@GameManager"
+		"ts:out/server/components/components@PlayerComponent": "server/components/components@PlayerComponent"
 	},
 	"metadata": {}
 }
