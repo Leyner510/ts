@@ -18,7 +18,6 @@ export class PlayerComponent extends BaseComponent<{}, Player> implements OnStar
 	public onStart() {
 		this.syncer.connect((player, ...payloads) => {
 			if (player !== this.instance) return;
-			this.buyUpgrade()
 
 			ServerEvents.updateAtoms.fire(player, payloads);
 		});

@@ -32,8 +32,8 @@ export class Click implements OnStart {
 
 		ClientEvents.hydrate.fire();
 
-		subscribe(this.clickAtom, (clicks, money) => {
-			print(`your clicks is ${clicks}, money is ${money}`);
-		});
+		subscribe(this.moneyAtom, (money) => {
+			print(`your money is ${money}`);
+		})
 	}
 }
