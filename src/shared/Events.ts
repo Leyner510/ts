@@ -4,6 +4,11 @@ import type CharmSync from "@rbxts/charm-sync";
 
 interface ClientToServerEvents {
 	click: () => void;
+	buyUpgrade: () => void;
+	money: () => void;
+	hydrateForMoney : () => CharmSync.SyncPayload<{ 
+		money: Atom<number> 
+	}>;
 	hydrate: () => CharmSync.SyncPayload<{
 		clicks: Atom<number>;
 	}>;
@@ -12,6 +17,8 @@ interface ClientToServerEvents {
 interface ServerToClientEvents {
 	updateAtoms: (payload: CharmSync.SyncPayload<{
 		clicks: Atom<number>;
+		money: Atom<number>;
+		updates: Atom<number>;
 	}>[]) => void;
 }
 

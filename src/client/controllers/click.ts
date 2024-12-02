@@ -6,9 +6,11 @@ import CharmSync from "@rbxts/charm-sync";
 
 @Controller({})
 export class Click implements OnStart {
+	private moneyAtom = atom<number>(0);
+	private updatesAtoms = atom<number>(0);
 	private clickAtom = atom<number>(0);
 	private syncer = CharmSync.client({
-		atoms: { clicks: this.clickAtom },
+		atoms: { clicks: this.clickAtom, money : this.moneyAtom, updates: this.updatesAtoms },
 	});
 
 	public onStart() {
@@ -18,14 +20,20 @@ export class Click implements OnStart {
 			}
 		});
 
+		UserInputService.InputBegan.Connect((input) => {
+			if (input.UserInputType === Enum.UserInputType.Keyboard && input.KeyCode === Enum.KeyCode.E) {
+				ClientEvents.buyUpgrade.fire();
+			}
+		});
+
 		ClientEvents.updateAtoms.connect((payloads) => {
 			this.syncer.sync(...payloads);
 		});
 
 		ClientEvents.hydrate.fire();
 
-		subscribe(this.clickAtom, (clicks) => {
-			print(`your clicks is ${clicks}`)
+		subscribe(this.clickAtom, (clicks, money) => {
+			print(`your clicks is ${clicks}, money is ${money}`);
 		});
 	}
 }

@@ -19,6 +19,11 @@ export class PlayerService implements OnStart {
 			playerComponent?.incrementClicks(1);
 		});
 
+		ServerEvents.buyUpgrade.connect((player) => {
+			const playerComponent = this.components.getComponent<PlayerComponent>(player);
+			playerComponent?.buyUpgrade();
+		});
+
 		Players.PlayerAdded.Connect((player) => this.components.addComponent<PlayerComponent>(player));
 	}
 }
